@@ -10,6 +10,10 @@ article.post('/', jwtAuth({secret: security.secretKey}), ArticleController.creat
 
 article.get('/', ArticleController.getArticle)
 
+article.get('/feature', ArticleController.getFeaturedArticle)
+
+article.get('/detail/:_id', ArticleController.getArticleDetail)
+
 article.put('/:_id', jwtAuth({secret: security.secretKey}), ArticleController.updateArticle)
 
 article.delete('/:_id', jwtAuth({secret: security.secretKey}),ArticleController.deleteArticle)

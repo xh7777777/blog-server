@@ -19,9 +19,7 @@ class CategoryController {
         let res = await query(`select * from art_category Limit ${startIndex},${pageSize}`)
         let string = JSON.stringify(res)
         let data = JSON.parse(string)
-        ctx.body = res_helper.json('获取分类成功',{
-            data,   
-        })
+        ctx.body = res_helper.json(data,'获取分类成功')
     }
     static async updateCate(ctx,next) { 
         categoryValidator(ctx)

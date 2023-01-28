@@ -1,7 +1,7 @@
 const mysql_config = {
   host: "localhost",
   user: "root",
-  password: "",
+  password: "xh20020722",
   database: "myblog",
   charset: "utf8mb4",
   port: "3306"

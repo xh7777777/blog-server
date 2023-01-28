@@ -54,15 +54,37 @@ class ArticleController {
         let res = await query(sql)
         let string = JSON.stringify(res)
         let data = JSON.parse(string)
-        if(keyword) {
-            data = data.filter( item => {
-                return item.keyword.includes(keyword)
-            })
-        }
-        console.log(data)
         ctx.body = res_helper.json({
-            data, length 
-        },'获取分类成功')
+            data, length: totalLength 
+        },'获取搜索的文章成功')
+    }
+    static async getFeaturedArticle(ctx, next) {         
+        let {pageIndex = 1, pageSize = 10, category_id= null , keyword=null} = ctx.query
+        let length = await query(`select COUNT(*) from article where featured = 1`)
+        let totalLength = length[0]['COUNT(*)']
+        //获取该页的数据
+        let startIndex = parseInt((pageIndex-1)*pageSize)
+        let sql = `select art_id,title,DATE_FORMAT(create_time,'%Y-%m-%d %H:%i:%S') 
+                    as create_time,browse,cover,description,keyword from article 
+                    where featured = 1 
+                    order by create_time desc 
+                    Limit ${startIndex},${pageSize}`
+
+        let res = await query(sql)
+        let string = JSON.stringify(res)
+        let data = JSON.parse(string)
+        ctx.body = res_helper.json({
+            data, length: totalLength
+        },'获取精选文章成功')
+    }
+    static async getArticleDetail(ctx, next) {         
+        const _id = ctx.params._id
+        //获取该页的数据
+        const sql = `select title,content,description,is_comment,cover,browse,author,read_time from article where art_id = '${_id}'`
+        let res = await query(sql)
+        let string = JSON.stringify(res)
+        let data = JSON.parse(string)
+        ctx.body = res_helper.json(data, '获取文章详情成功')
     }
     static async updateArticle() {
 
