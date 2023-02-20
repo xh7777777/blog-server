@@ -1,22 +1,28 @@
 const Router = require('@koa/router')
 const jwtAuth = require('koa-jwt')
 const ArticleController = require('../controller/ArticleController')
+const upload = require('../middlewares/upload')
+const uploadToCloud = require('../middlewares/uploadToCloud')
 const {security} = require('../config')
 const article = new Router()
 
 article.prefix('/article')
 
-article.post('/', jwtAuth({secret: security.secretKey}), ArticleController.createArticle)
+article.post('/' , ArticleController.createArticle)
 
-article.get('/', ArticleController.getArticle)
+article.post('/upload' , uploadToCloud)
 
-article.get('/feature', ArticleController.getFeaturedArticle)
+article.post('/upload/cdn' ,uploadToCloud, ArticleController.uploadCDN)
+
+// article.get('/', ArticleController.getArticle)
+
+article.get('/table', ArticleController.getArticleTable)
 
 article.get('/detail/:_id', ArticleController.getArticleDetail)
 
-article.put('/:_id', jwtAuth({secret: security.secretKey}), ArticleController.updateArticle)
+article.put('/:_id' , ArticleController.updateArticle)
 
-article.delete('/:_id', jwtAuth({secret: security.secretKey}),ArticleController.deleteArticle)
+article.delete('/:_id' ,ArticleController.deleteArticle)
 
 module.exports = article
 

@@ -5,12 +5,12 @@ const {security} = require('../config')
 
 const logger = new Router()
 logger.prefix('/logger')
-logger.post('/', jwtAuth({secret: security.secretKey}), LoggerController.createLogger)
+logger.post('/', LoggerController.createLogger)
 
 logger.get('/',  LoggerController.getAllLogger)
 
-logger.put('/:_id', jwtAuth({secret: security.secretKey}), LoggerController.updateLogger)
+logger.put('/:_id', LoggerController.updateLogger)
 
-logger.delete('/:_id', jwtAuth({secret: security.secretKey}), LoggerController.deleteLogger)
+logger.delete('/:_id', LoggerController.deleteLogger)
 
 module.exports = logger

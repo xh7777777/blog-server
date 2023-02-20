@@ -1,6 +1,6 @@
 const Koa = require('koa')
 const app = new Koa()
-const static = require('koa-static')
+const static = require('koa-static') //托管静态资源
 const cors = require('koa2-cors')
 const {PORT} = require('./config')
 const router = require('./router')
@@ -19,7 +19,7 @@ global.errs = errors;
 // 错误处理中间件
 app.use(catchError);
 app
-  .use(koaBody())
+  .use(koaBody({ multipart: true }))
   .use(bouncer.middleware())
   .use(json())
   .use(cors())

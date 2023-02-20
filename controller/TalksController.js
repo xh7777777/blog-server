@@ -13,7 +13,7 @@ class TalksController {
         let res = 0 
         if(keyword) res = await query(`select * from talks where content REGEXP '${keyword}'`)
         else res = await query(`select * from talks`)
-        ctx.body = res_helper.json('获取成功', res)
+        ctx.body = res_helper.json(res,'获取成功')
     }
     static async updateTalk(ctx,next) { 
         const _id = ctx.params._id

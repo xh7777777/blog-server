@@ -5,12 +5,12 @@ const {security} = require('../config')
 
 const talks = new Router()
 talks.prefix('/talk')
-talks.post('/', jwtAuth({secret: security.secretKey}), TalksController.createTalk)
+talks.post('/', TalksController.createTalk)
 
 talks.get('/', TalksController.getAllTalk)
 
-talks.put('/:_id', jwtAuth({secret: security.secretKey}), TalksController.updateTalk)
+talks.put('/:_id', TalksController.updateTalk)
 
-talks.delete('/:_id', jwtAuth({secret: security.secretKey}), TalksController.deleteTalk)
+talks.delete('/:_id', TalksController.deleteTalk)
 
 module.exports = talks

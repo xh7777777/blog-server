@@ -6,7 +6,8 @@ const article = require('./article')
 const talks = require('./talks.js')
 const logger = require('./logger.js')
 const tag = require('./tag')
-
+const about = require('./about')
+const comment = require('./comment')
 router.use(admin.routes())
 admin.allowedMethods()
 
@@ -24,5 +25,12 @@ logger.allowedMethods()
 
 router.use(tag.routes())
 tag.allowedMethods()
+
+router.use(about.routes())
+about.allowedMethods()
+
+router.use(comment.routes())
+about.allowedMethods()
+
 
 module.exports = router

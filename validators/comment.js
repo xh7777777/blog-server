@@ -10,8 +10,8 @@ function commentValidator(ctx) {
     .isString()
     .trim();
   ctx
-    .validateBody("target_id")
-    .required("目标 target_id不能为空")
+    .validateBody("art_id")
+    .required("目标art_id不能为空")
     .isString()
     .trim();
 }

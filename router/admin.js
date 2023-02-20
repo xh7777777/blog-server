@@ -9,6 +9,8 @@ admin.post('/register', AdminController.register)
 
 admin.post('/login',AdminController.login)
 
-admin.get('/user/info',jwtAuth({secret:security.secretKey }) ,AdminController.getUserInfo)
+admin.get('/user/info',jwtAuth({secret:security.secretKey}), AdminController.getUserInfo)
+
+
 
 module.exports = admin

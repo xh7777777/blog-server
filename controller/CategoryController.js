@@ -4,19 +4,20 @@ const res_helper = require('../core/helper')
 class CategoryController {
     static async createCate(ctx, next) {
         categoryValidator(ctx)
-        const {name, keyword} = ctx.request.body;
+        const {name} = ctx.request.body;
         const isExit = await query(`select * from art_category where cate_name = '${name}'`)
         if(isExit.length) {
             throw new global.errs.Existing('分类已存在',900)
         }
-        await query(`insert into art_category (cate_name, cate_keyword) VALUE ('${name}','${keyword}')`)
+        await query(`insert into art_category (cate_name) VALUE ('${name}')`)
         ctx.body = res_helper.success("创建分类成功")
     }
     static async getAllCate(ctx,next) {
         let {pageIndex = 1, pageSize = 10} = ctx.query
         let startIndex = parseInt((pageIndex-1)*pageSize)
-        console.log(pageIndex,pageSize)
-        let res = await query(`select * from art_category Limit ${startIndex},${pageSize}`)
+        let res = await query(`select at.cate_id,at.cate_name,case when COUNT(at.cate_id)=1 then 0 else COUNT(at.cate_id) end total
+        from art_category at
+            left join article a on at.cate_id = a.cate_id group by at.cate_id Limit ${startIndex},${pageSize}`)
         let string = JSON.stringify(res)
         let data = JSON.parse(string)
         ctx.body = res_helper.json(data,'获取分类成功')
@@ -24,9 +25,9 @@ class CategoryController {
     static async updateCate(ctx,next) { 
         categoryValidator(ctx)
         const _id = ctx.params._id
-        const {name, keyword} = ctx.request.body;
+        const {name} = ctx.request.body;
         await query(`update art_category
-                    set cate_name='${name}',cate_keyword='${keyword}'
+                    set cate_name='${name}'
                     where cate_id = '${_id}'`)
         ctx.body = res_helper.success('更新成功')
     }

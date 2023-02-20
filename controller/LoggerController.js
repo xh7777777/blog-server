@@ -11,13 +11,14 @@ class LoggerController {
     static async getAllLogger(ctx,next) {
         const {keyword = null} = ctx.query
         let res = 0 
-        if(keyword) res = await query(`select * from logger where content REGEXP '${keyword}'`)
-        else res = await query(`select * from logger`)
-        ctx.body = res_helper.json('获取成功', res)
+        if(keyword) res = await query(`select DATE_FORMAT(time,'%Y-%m-%d %H:%i:%S') as time,content,logger_id from logger REGEXP '${keyword}'`)
+        else res = await query(`select DATE_FORMAT(time,'%Y-%m-%d %H:%i:%S') as time,content,logger_id from logger`)
+        ctx.body = res_helper.json(res,'获取成功')
     }
     static async updateLogger(ctx,next) { 
         const _id = ctx.params._id
         const {content} = ctx.request.body;
+        console.log(content)
         await query(`update logger
                     set content='${content}'
                     where logger_id = '${_id}'`)

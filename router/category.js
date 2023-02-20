@@ -5,12 +5,12 @@ const {security} = require('../config')
 
 const category = new Router()
 category.prefix('/category')
-category.post('/', jwtAuth({secret: security.secretKey}), CategoryController.createCate)
+category.post('/', CategoryController.createCate)
 
 category.get('/', CategoryController.getAllCate)
 
-category.put('/:_id', jwtAuth({secret: security.secretKey}), CategoryController.updateCate)
+category.put('/:_id', CategoryController.updateCate)
 
-category.delete('/:_id', jwtAuth({secret: security.secretKey}), CategoryController.deleteCate)
+category.delete('/:_id', CategoryController.deleteCate)
 
 module.exports = category

@@ -5,12 +5,12 @@ const {security} = require('../config')
 
 const tag = new Router()
 tag.prefix('/tag')
-tag.post('/', jwtAuth({secret: security.secretKey}), TagController.createTag)
+tag.post('/', TagController.createTag)
 
 tag.get('/', TagController.getAllTag)
 
-tag.put('/:_id', jwtAuth({secret: security.secretKey}), TagController.updateTag)
+tag.put('/:_id', TagController.updateTag)
 
-tag.delete('/:_id', jwtAuth({secret: security.secretKey}), TagController.deleteTag)
+tag.delete('/:_id', TagController.deleteTag)
 
 module.exports = tag
